@@ -4,12 +4,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class JobConfiguration : IEntityTypeConfiguration<Job>
+    public class JobConfiguration : IEntityTypeConfiguration<<%= entityName %>>
     {
-        public void Configure(EntityTypeBuilder<Job> builder)
+        public void Configure(EntityTypeBuilder<<%= entityName %>> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.HasIndex(b => b.HashId);
+          
         }
     }
 }
