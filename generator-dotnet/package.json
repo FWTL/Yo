@@ -1,0 +1,19 @@
+{
+  "name": "generator-dotnet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FWTL/Yo.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Andrzej Gołaszewski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FWTL/Yo/issues"
+  },
+  "homepage": "https://github.com/FWTL/Yo#readme"
+}
