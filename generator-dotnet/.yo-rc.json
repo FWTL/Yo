@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Andrzej Gołaszewski",
+      "authorEmail": "golaszewski.a@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}
