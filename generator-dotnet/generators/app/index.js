@@ -12,7 +12,10 @@ module.exports = class extends Generator {
     this.answers.InfrastructureGuid = Guid();
 
     this.destinationRoot("result");
-    this.fs.delete(this.destinationRoot());
+
+    var a = 5;
+    var b = 10;
+    console.log(`Fifteen is ${a + b} and\nnot ${2 * a + b}.`);
   }
 
   async prompting() {
@@ -32,7 +35,12 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(this.templatePath(),this.destinationPath());
+    //Copy root
+    this.fs.copy(`${this.templatePath()}/*`, this.destinationPath());
+    this.fs.copy(`${this.templatePath()}/dotfiles/gitattributes`, `${this.destinationPath()}/.gitattributes`);
+    this.fs.copy(`${this.templatePath()}/dotfiles/gitignore`, `${this.destinationPath()}/.gitignore`);
+
+    this.fs.copy(`${this.templatePath()}/_Template.Api/*`, `${this.destinationPath()}/_Template.Api`);
   }
 
   install() {
