@@ -34,21 +34,10 @@ namespace <%= solutionName %>.Api
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
-                var credentials = new JobsDatabaseCredentials();
+                var credentials = new <%= entityName %>DatabaseCredentials();
                 credentials.BuildLocalConnectionString(
                         configuration["Api:Sql:Url"],
                         configuration["Api:Sql:Catalog"]);
-
-                return credentials;
-            }).SingleInstance();
-
-            builder.Register(b =>
-            {
-                var configuration = b.Resolve<IConfiguration>();
-                var credentials = new HangfireDatabaseCredentials();
-                credentials.BuildLocalConnectionString(
-                        configuration["Hangfire:Sql:Url"],
-                        configuration["Hangfire:Sql:Catalog"]);
 
                 return credentials;
             }).SingleInstance();
@@ -56,20 +45,6 @@ namespace <%= solutionName %>.Api
 
         public static void RegisterCredentials(ContainerBuilder builder)
         {
-            builder.Register(b =>
-            {
-                var configuration = b.Resolve<IConfiguration>();
-                var credentials = new HangfireDatabaseCredentials();
-                credentials.BuildConnectionString(
-                        configuration["Hangfire:Sql:Url"],
-                        configuration["Hangfire:Sql:Port"].To<int>(),
-                        configuration["Hangfire:Sql:Catalog"],
-                        configuration["Hangfire:Sql:User"],
-                        configuration["Hangfire:Sql:Password"]);
-
-                return credentials;
-            }).SingleInstance();
-
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
@@ -108,21 +83,6 @@ namespace <%= solutionName %>.Api
                     configuration["Api:Sql:Password"]);
 
                 return credentials;
-            }).SingleInstance();
-
-            builder.Register(b =>
-            {
-                var configuration = b.Resolve<IConfiguration>();
-                var settings = new TelegramSettings()
-                {
-                    AppHash = configuration["Telegram:Settings:AppHash"],
-                    AppId = configuration["Telegram:Settings:AppId"].To<int>(),
-                    ServerAddress = configuration["Telegram:Settings:ServerAddress"],
-                    ServerPort = configuration["Telegram:Settings:ServerPort"].To<int>(),
-                    ServerPublicKey = configuration["Telegram:Settings:ServerPublicKey"]
-                };
-
-                return settings;
             }).SingleInstance();
 
             builder.Register(b =>
@@ -208,8 +168,7 @@ namespace <%= solutionName %>.Api
                 return new MemoryCache(new MemoryCacheOptions());
             }).SingleInstance();
 
-            builder.RegisterType<DapperConnector<JobsDatabaseCredentials>>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DapperConnector<HangfireDatabaseCredentials>>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DapperConnector<<%= entityName %>DatabaseCredentials>>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GuidService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<IdentityModelClient>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CurrentUserProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();

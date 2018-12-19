@@ -2,7 +2,7 @@
 
 namespace <%= solutionName %>.Database
 {
-    public class JobsDatabaseCredentials : DatabaseCredentialsBase
+    public class <%= entityName %>DatabaseCredentials : DatabaseCredentialsBase
     {
     }
 }
