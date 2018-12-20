@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    public class JobConfiguration : IEntityTypeConfiguration<<%= entityName %>>
+    public class <%= entityName %>Configuration : IEntityTypeConfiguration<<%= entityName %>>
     {
         public void Configure(EntityTypeBuilder<<%= entityName %>> builder)
         {

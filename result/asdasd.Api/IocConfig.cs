@@ -1,18 +1,20 @@
-﻿using System;
+using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using <%= solutionName %>.Core.CQRS;
-using <%= solutionName %>.Core.Extensions;
-using <%= solutionName %>.Core.Services.Redis;
-using <%= solutionName %>.Core.Services.Unique;
-using <%= solutionName %>.Database;
-using <%= solutionName %>.Infrastructure.CQRS;
-using <%= solutionName %>.Infrastructure.Dapper;
-using <%= solutionName %>.Infrastructure.EventHub;
-using <%= solutionName %>.Infrastructure.Identity;
-using <%= solutionName %>.Infrastructure.Unique;
-using <%= solutionName %>.Infrastructure.User;
-using <%= solutionName %>.Infrastructure.Validation;
+using asdasd.Core.CQRS;
+using asdasd.Core.Extensions;
+using asdasd.Core.Services.Redis;
+using asdasd.Core.Services.Sql;
+using asdasd.Core.Services.Telegram;
+using asdasd.Core.Services.Unique;
+using asdasd.Database;
+using asdasd.Infrastructure.CQRS;
+using asdasd.Infrastructure.Dapper;
+using asdasd.Infrastructure.EventHub;
+using asdasd.Infrastructure.Identity;
+using asdasd.Infrastructure.Unique;
+using asdasd.Infrastructure.User;
+using asdasd.Infrastructure.Validation;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.EventHubs;
@@ -23,7 +25,7 @@ using NodaTime;
 using Serilog;
 using StackExchange.Redis;
 
-namespace <%= solutionName %>.Api
+namespace asdasd.Api
 {
     public class IocConfig
     {
@@ -32,7 +34,7 @@ namespace <%= solutionName %>.Api
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
-                var credentials = new <%= entityName %>DatabaseCredentials();
+                var credentials = new asdasdaDatabaseCredentials();
                 credentials.BuildLocalConnectionString(
                         configuration["Api:Sql:Url"],
                         configuration["Api:Sql:Catalog"]);
@@ -72,7 +74,7 @@ namespace <%= solutionName %>.Api
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
-                var credentials = new <%= entityName %>DatabaseCredentials();
+                var credentials = new JobsDatabaseCredentials();
                 credentials.BuildConnectionString(
                     configuration["Api:Sql:Url"],
                     configuration["Api:Sql:Port"].To<int>(),
@@ -166,8 +168,9 @@ namespace <%= solutionName %>.Api
                 return new MemoryCache(new MemoryCacheOptions());
             }).SingleInstance();
 
-            builder.RegisterType<DapperConnector<<%= entityName %>DatabaseCredentials>>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DapperConnector<asdasdaDatabaseCredentials>>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GuidService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<IdentityModelClient>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CurrentUserProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RandomService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<EventHubService>().AsImplementedInterfaces().SingleInstance();

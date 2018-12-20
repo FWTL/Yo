@@ -15,6 +15,7 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="FluentValidation" Version="8.1.1" />
+    <PackageReference Include="Hangfire" Version="1.6.21" />
     <PackageReference Include="IdentityModel" Version="3.10.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -27,8 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\<%= solutionName %>.Core\<%= solutionName %>.Core.csproj" />
-    <ProjectReference Include="..\<%= solutionName %>.Database\<%= solutionName %>.Database.csproj" />
-    <ProjectReference Include="..\<%= solutionName %>.Infrastructure\<%= solutionName %>.Infrastructure.csproj" />
+    <ProjectReference Include="..\asdasd.Core\asdasd.Core.csproj" />
+    <ProjectReference Include="..\asdasd.Database\asdasd.Database.csproj" />
+    <ProjectReference Include="..\asdasd.Infrastructure\asdasd.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

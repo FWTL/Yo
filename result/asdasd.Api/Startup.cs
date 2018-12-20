@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using FluentValidation;
-using <%= solutionName %>.Core.Services.Sql;
-using <%= solutionName %>.Database;
-using <%= solutionName %>.Infrastructure.Configuration;
-using <%= solutionName %>.Infrastructure.Filters;
-using <%= solutionName %>.Infrastructure.Swagger;
+using asdasd.Core.Services.Sql;
+using asdasd.Database;
+using asdasd.Infrastructure.Configuration;
+using asdasd.Infrastructure.Filters;
+using asdasd.Infrastructure.Swagger;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace <%= solutionName %>.Api
+namespace asdasd.Api
 {
     public class Startup
     {
@@ -50,7 +51,7 @@ namespace <%= solutionName %>.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "<%= solutionName %>.Api");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "asdasd.Api");
                 c.DisplayRequestDuration();
 
                 c.OAuthClientId("swagger");
@@ -87,7 +88,7 @@ namespace <%= solutionName %>.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "<%= solutionName %>.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "asdasd.Api", Version = "v1" });
                 c.MapType<Guid>(() => new Schema() { Type = "string", Format = "text", Description = "GUID" });
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
@@ -107,7 +108,13 @@ namespace <%= solutionName %>.Api
                 options.DescribeAllEnumsAsStrings();
             });
 
-            services.AddDbContext<<%= entityName %>DatabaseContext>();
+            services.AddHangfire(hangfire =>
+            {
+                HangfireDatabaseCredentials hangfireDatabaseCredentials = applicationContainer.Resolve<HangfireDatabaseCredentials>();
+                hangfire.UseSqlServerStorage(hangfireDatabaseCredentials.ConnectionString);
+            });
+
+            services.AddDbContext<TelegramDatabaseContext>();
 
             applicationContainer = IocConfig.RegisterDependencies(services, _hostingEnvironment, _configuration);
 

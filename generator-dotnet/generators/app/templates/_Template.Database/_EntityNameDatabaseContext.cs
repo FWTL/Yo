@@ -3,11 +3,11 @@
     using <%= solutionName %>.Database.Configuration;
     using Microsoft.EntityFrameworkCore;
 
-    public class TelegramDatabaseContext : DbContext
+    public class <%= entityName %>DatabaseContext : DbContext
     {
-        private readonly JobsDatabaseCredentials _credentials;
+        private readonly <%= entityName %>DatabaseCredentials _credentials;
 
-        public TelegramDatabaseContext(JobsDatabaseCredentials credentials)
+        public <%= entityName %>DatabaseContext(<%= entityName %>DatabaseCredentials credentials)
         {
             _credentials = credentials;
         }
@@ -20,7 +20,7 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new JobConfiguration());
+            modelBuilder.ApplyConfiguration(new <%= entityName %>Configuration());
         }
     }
 }
