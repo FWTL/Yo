@@ -8,7 +8,7 @@ if(!($buildPath)){
 }
 else
 {
-    $buildPath = Join-Path $buildPath '<%= solutionName %>.Api'
+    $buildPath = Join-Path $buildPath '<%= solutionName %>.Database'
 }
 
 $Env:ASPNETCORE_ENVIRONMENT = $configuration
