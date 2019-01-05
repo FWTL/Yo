@@ -46,18 +46,6 @@ namespace <%= solutionName %>.Api
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
-                var credentails = new IdentityModelCredentials()
-                {
-                    ClientId = configuration["Auth:Client:Id"],
-                    ClientSecret = configuration["Auth:Client:Secret"]
-                };
-
-                return credentails;
-            }).SingleInstance();
-
-            builder.Register(b =>
-            {
-                var configuration = b.Resolve<IConfiguration>();
                 var credentails = new RedisCredentials();
                 credentails.BuildConnectionString(
                     configuration["Redis:Name"],
